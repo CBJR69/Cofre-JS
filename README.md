@@ -14,4 +14,4 @@ Um simulador de cofre digital com teclado numérico, verificação de senha e al
 ## 📦 Como usar?
 1. Clone o repositório:
    ```sh
-   git clone https://github.com/CBJR69/Cofre-JS.git
+   git clone https://github.com/CBJR69/Cofre-JS.git# Cofre-JS
