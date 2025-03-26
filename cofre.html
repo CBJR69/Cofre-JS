@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Simulador de Cofre</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px;
+        }
+
+        #cofre-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid #333;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 300px;
+        }
+
+        #display {
+            font-size: 2rem;
+            width: 200px;
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 8px;
+        }
+
+        .display-normal {
+            background-color: #ccc;
+            color: #000;
+        }
+
+        .display-green {
+            background-color: rgb(0, 241, 0);
+            color: #000;
+        }
+
+        .display-red {
+            background-color: #f00;
+            color: #fff;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .keypad button, #enter-button, #alarm-toggle {
+            font-size: 1.2rem;
+            padding: 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+        }
+
+        .disabled {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cofre-container">
+        <h1>Simulador de Cofre</h1>
+        <button id="alarm-toggle">Alarme: DESLIGADO</button>
+        <div id="display" class="display-normal">----</div>
+        <div class="keypad" id="keypad">
+            <button onclick="digitar(1)">1</button>
+            <button onclick="digitar(2)">2</button>
+            <button onclick="digitar(3)">3</button>
+            <button onclick="digitar(4)">4</button>
+            <button onclick="digitar(5)">5</button>
+            <button onclick="digitar(6)">6</button>
+            <button onclick="digitar(7)">7</button>
+            <button onclick="digitar(8)">8</button>
+            <button onclick="digitar(9)">9</button>
+            <button onclick="limpar()">Limpar</button>
+            <button onclick="digitar(0)">0</button>
+            <button onclick="cancelar()">Cancelar</button>
+        </div>
+        <button onclick="verificarSenha()" id="enter-button">ENTER</button>
+    </div>
+
+    <script>
+        let senhaCorreta = gerarSenhaAleatoria();
+        let senhaDigitada = "";
+        let alarmeAtivado = false;
+
+        console.log("Senha gerada:", senhaCorreta);
+
+        function gerarSenhaAleatoria() {
+            return Math.floor(1000 + Math.random() * 9000).toString();
+        }
+
+        function digitar(numero) {
+            if (senhaDigitada.length < 4) {
+                senhaDigitada += numero;
+                atualizarDisplay();
+            }
+        }
+
+        function atualizarDisplay() {
+            const display = document.getElementById("display");
+            display.textContent = senhaDigitada.padEnd(4, "-");
+            display.className = "display-normal";
+        }
+
+        function limpar() {
+            senhaDigitada = "";
+            atualizarDisplay();
+        }
+
+        function cancelar() {
+            senhaDigitada = "";
+            atualizarDisplay();
+        }
+
+        function verificarSenha() {
+            const display = document.getElementById("display");
+            if (senhaDigitada === senhaCorreta) {
+                display.className = "display-green";
+            } else {
+                display.className = "display-red";
+                if (alarmeAtivado) {
+                    desativarBotoes(true);
+                }
+            }
+        }
+
+        document.getElementById("alarm-toggle").addEventListener("click", function () {
+            alarmeAtivado = !alarmeAtivado;
+            this.textContent = "Alarme: " + (alarmeAtivado ? "LIGADO" : "DESLIGADO");
+        });
+
+        function desativarBotoes(desativar) {
+            const botoes = document.querySelectorAll(".keypad button, #enter-button");
+            botoes.forEach(botao => {
+                botao.classList.toggle("disabled", desativar);
+            });
+        }
+    </script>
+</body>
+</html>
