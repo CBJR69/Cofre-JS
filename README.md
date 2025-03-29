@@ -11,11 +11,11 @@ Um simulador de cofre digital com teclado numérico, verificação de senha e al
 ## 🛠 Tecnologias
 - HTML, CSS e JavaScript
 
+## 🌐 Acesso Web:
+
+- https://cofre-js.netlify.app/
+
 ## 📦 Como usar?
 1. Clone o repositório:
    ```sh
    git clone https://github.com/CBJR69/Cofre-JS.git# Cofre-JS
-
-## 🌐 Acesso Web:
-
-- https://cofre-js.netlify.app/
